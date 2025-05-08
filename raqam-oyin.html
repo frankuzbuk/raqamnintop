@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Raqam topish o‘yini</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #javob {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .result {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Raqam topish o‘yini</h1>
+    <p>Men 1 dan 10 gacha bir raqam o‘yladim. Topishga harakat qiling!</p>
+    
+    <input type="number" id="taxmin" placeholder="Raqam kiriting (1–10)">
+    <button onclick="tekshir()">Tekshir</button>
+    
+    <p id="javob"></p>
+    
+    <div class="result">
+      <p>Urinishlar soni: <span id="urinishSon">0</span></p>
+    </div>
+    
+    <button id="qayta" onclick="qaytaOynash()" style="display:none;">Qayta o‘ynash</button>
+  </div>
+
+  <script>
+    // Kompyuter tasodifiy raqam o‘ylaydi
+    let sirliRaqam = Math.floor(Math.random() * 10) + 1;
+    let urinishlar = 0;
+
+    function tekshir() {
+      let taxmin = parseInt(document.getElementById("taxmin").value);
+      let javob = document.getElementById("javob");
+      let urinishSon = document.getElementById("urinishSon");
+
+      urinishlar++;
+
+      if (taxmin < sirliRaqam) {
+        javob.textContent = "Katta raqam kiriting!";
+        javob.style.color = "orange";
+        playSound("incorrect");
+      } else if (taxmin > sirliRaqam) {
+        javob.textContent = "Kichik raqam kiriting!";
+        javob.style.color = "orange";
+        playSound("incorrect");
+      } else {
+        javob.textContent = "To‘g‘ri topdingiz! 👏";
+        javob.style.color = "green";
+        playSound("correct");
+        document.getElementById("qayta").style.display = "inline-block";
+      }
+
+      urinishSon.textContent = urinishlar;
+    }
+
+    function qaytaOynash() {
+      sirliRaqam = Math.floor(Math.random() * 10) + 1;
+      urinishlar = 0;
+      document.getElementById("taxmin").value = '';
+      document.getElementById("javob").textContent = '';
+      document.getElementById("urinishSon").textContent = urinishlar;
+      document.getElementById("qayta").style.display = "none";
+    }
+
+    // Ovozni qo‘shish
+    function playSound(status) {
+      let audio;
+      if (status === "correct") {
+        audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); // To‘g‘ri ovoz
+      } else {
+        audio = new Audio('https://www.soundjay.com/button/beep-09.wav'); // Noto‘g‘ri ovoz
+      }
+      audio.play();
+    }
+  </script>
+
+</body>
+</html>
+
